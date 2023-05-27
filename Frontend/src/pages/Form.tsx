@@ -69,12 +69,13 @@ const Form: FC = () => {
     return (
         <section>
             <Flex flexDirection="column" w="80%" m="auto" justifyContent={"right"} mt="80px"  >
-                <Text as='em' data-aos="flip-right" textAlign={"center"} fontSize="25" mt="5" mb="2" >Add Tour Details</Text>
-                <Divider orientation='horizontal' borderColor={'#000'} borderWidth="1px" w="95%" m="auto" mb="5" />
-                <Flex flexDirection="row" alignItems={"center"} p="2" bg="#f4f5d7" border="1px solid #ecf229 " w="90%" m="auto" mb="30px"  >
+                <Text data-aos="flip-right" textAlign={"center"} fontSize="25px" mt="5" fontWeight="600" color="#000" >Plan Your Dream Vacation</Text>
+                <Text as='em' data-aos="flip-right" textAlign={"center"} fontSize="20px" fontWeight="500" mb="30px" color="#858482" >Tell us your travel preferences and let us create an unforgettable experience for you</Text>
+                {/* <Divider orientation='horizontal' borderColor={'#000'} borderWidth="1px" w="95%" m="auto" mb="5" /> */}
+                {/* <Flex flexDirection="row" alignItems={"center"} p="2" bg="#f4f5d7" border="1px solid #ecf229 " w="90%" m="auto" mb="30px"  >
                     <AiFillExclamationCircle color='#b1b52d' fontSize={"25"} />
                     <Text fontSize="18" ml="5" >All Input Feilds are Mandotary</Text>
-                </Flex>
+                </Flex> */}
                 <form onSubmit={formik.handleSubmit} style={{ width: "100%", margin: "auto", boxShadow: "rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset", marginBottom: "50px", borderRadius: "10px" }} >
                     <Container
                         maxW="90%"
