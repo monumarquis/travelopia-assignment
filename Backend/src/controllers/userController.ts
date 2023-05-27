@@ -57,11 +57,11 @@ const postUser = async (req: Request, res: Response) => {
 
 // Get Route Logic
 const getAllUser = async (req: Request, res: Response) => {
-  const { page = 1, limit = 10 } = req.query
+  const { page = 1, limit = 5 } = req.query
   console.log(page, limit)
   if (page) {
     const Totaluser: UserDocument[] = await userModel.find({})
-    let totalPages: number = Math.floor(Totaluser.length / 10) + 1
+    let totalPages: number = Math.ceil(Totaluser.length / 5)
     console.log(totalPages)
     const user: UserDocument[] = await userModel.find({}).limit(Number(limit) * 1)
       .skip((Number(page) - 1) * Number(limit));

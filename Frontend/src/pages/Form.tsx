@@ -31,7 +31,7 @@ const Form: FC = () => {
         setLoading(true)
         try {
             console.log({ ...values, travellers })
-            let { data } = await axios.post("http://localhost:8001/user", { ...values, travellers })
+            let { data } = await axios.post("https://travel-back-8w0c.onrender.com/user", { ...values, travellers })
             toast({
                 title: data.message,
                 description: "We've Added your Details for you.",
@@ -82,8 +82,8 @@ const Form: FC = () => {
                         centerContent
                     >
                         <FormControl py="10" >
-                            <Flex flexDirection="row" justifyContent={"space-between"} w="100%"  >
-                                <Flex flexDirection="column" w="48%" >
+                            <Flex flexDirection={["column","column","column","row","row"]} justifyContent={"space-between"} w="100%"  >
+                                <Flex flexDirection="column" w={["100%","100%","100%","48%","48%"]} >
                                     <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300" >
                                         Name
                                     </FormLabel>
@@ -101,7 +101,7 @@ const Form: FC = () => {
                                     />
                                     {formik.touched.name && formik.errors.name && <Text color="red.400" fontSize={"15px"} >{formik.errors.name}</Text>}
                                 </Flex>
-                                <Flex flexDirection="column" w="48%" >
+                                <Flex flexDirection="column"  w={["100%","100%","100%","48%","48%"]} >
                                     <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
                                         Email Address
                                     </FormLabel>
@@ -120,8 +120,8 @@ const Form: FC = () => {
                                     {formik.touched.email && formik.errors.email && <Text color="red.400" fontSize={"15px"} >{formik.errors.email}.</Text>}
                                 </Flex>
                             </Flex>
-                            <Flex flexDirection="row" mt="5px" w="100%" justifyContent={"space-between"}>
-                                <Flex flexDirection="column" w="48%">
+                            <Flex flexDirection={["column","column","column","row","row"]} mt="5px" w="100%" justifyContent={"space-between"}>
+                                <Flex flexDirection="column"w={["100%","100%","100%","48%","48%"]}>
                                     <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
                                         Where do you want to go?
                                     </FormLabel>
@@ -132,7 +132,7 @@ const Form: FC = () => {
                                     </Select>
                                     {formik.touched.destination && formik.errors.destination && <Text color="red.400" fontSize={"15px"} >{formik.errors.destination}.</Text>}
                                 </Flex>
-                                <Flex flexDirection="column" w="48%">
+                                <Flex flexDirection="column"w={["100%","100%","100%","48%","48%"]}>
                                     <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
                                         Budget per Person
                                     </FormLabel>
