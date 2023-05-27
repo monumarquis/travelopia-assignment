@@ -8,7 +8,6 @@ const userSchema = new Schema(
     destination: { type: String, required: true },
     travellers: { type: Number, required: true },
     budgetOfPerson: { type: Number, required: true },
-   
   },
   { versionKey: false, timestamps: true }
 );

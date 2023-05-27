@@ -23,7 +23,6 @@ export type UserState = {
     email: string,
     destination: string,
     budgetOfPerson: string,
-    currency: string,
     travellers: string,
     updatedAt: string;
     createdAt: string;
@@ -47,14 +46,12 @@ export type UserTravelInitState = {
     email: string,
     destination: string,
     budgetOfPerson: string,
-    currency: string,
 }
 export type UserTravelState = {
     name: string,
     email: string,
     destination: string,
     budgetOfPerson: number,
-    currency: string,
 }
 export interface getAllUserAction {
     type: UserAction,

@@ -1,4 +1,4 @@
-import { Button, Flex, Input, FormControl, FormLabel, Container, Text, useToast, Divider, Select } from '@chakra-ui/react'
+import { Button, Flex, Input, FormControl, FormLabel, Container, Text, useToast, Divider, Select, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { FormikHelpers, FormikProps } from 'formik/dist/types';
@@ -8,11 +8,10 @@ import { uservalidationSchema } from '../controller/FormValdation';
 import { AiFillExclamationCircle } from "react-icons/ai"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import { CgDollar } from "react-icons/cg"
 const initState: UserTravelInitState = {
     name: "",
     email: "",
-    currency: "",
     destination: "",
     budgetOfPerson: "",
 };
@@ -20,17 +19,19 @@ const initState: UserTravelInitState = {
 const Form: FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [Travellertouch, setTravellertouch] = useState<boolean>(false);
-    const [travellers, setTravellers] = useState<string | number>(50);
+    const [travellers, setTravellers] = useState<string | number>(1);
     const toast = useToast()
 
     useEffect(() => {
         AOS.init();
     }, [])
+
     const handlePostTravellers = async (values: UserTravelInitState, { resetForm }: FormikHelpers<UserTravelInitState>): Promise<any> => {
+        console.log(formik.values);
         setLoading(true)
         try {
             console.log({ ...values, travellers })
-            let { data } = await axios.post("https://graceful-wasp-slip.cyclic.app/user", { ...values, travellers })
+            let { data } = await axios.post("http://localhost:8001/user", { ...values, travellers })
             toast({
                 title: data.message,
                 description: "We've Added your Details for you.",
@@ -64,6 +65,7 @@ const Form: FC = () => {
     }
 
 
+
     return (
         <section>
             <Flex flexDirection="column" w="80%" m="auto" justifyContent={"right"} mt="80px"  >
@@ -76,7 +78,6 @@ const Form: FC = () => {
                 <form onSubmit={formik.handleSubmit} style={{ width: "100%", margin: "auto", boxShadow: "rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset", marginBottom: "50px", borderRadius: "10px" }} >
                     <Container
                         maxW="90%"
-                        background={"#fff"}
                         centerContent
                     >
                         <FormControl py="10" >
@@ -95,9 +96,9 @@ const Form: FC = () => {
                                         isInvalid={formik.touched.name && Boolean(formik.errors.name)}
                                         onBlur={formik.handleBlur}
                                         pl="3"
-
+                                        bg="#f0eedd"
                                     />
-                                    {formik.touched.name && formik.errors.name && <Text color="red.400" fontSize={12} >{formik.errors.name}</Text>}
+                                    {formik.touched.name && formik.errors.name && <Text color="red.400" fontSize={"15px"} >{formik.errors.name}</Text>}
                                 </Flex>
                                 <Flex flexDirection="column" w="48%" >
                                     <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
@@ -113,21 +114,46 @@ const Form: FC = () => {
                                         isInvalid={formik.touched.email && Boolean(formik.errors.email)}
                                         onBlur={formik.handleBlur}
                                         pl="3"
-
+                                        bg="#f0eedd"
                                     />
-                                    {formik.touched.email && formik.errors.email && <Text color="red.400" fontSize={12} >{formik.errors.email}.</Text>}
+                                    {formik.touched.email && formik.errors.email && <Text color="red.400" fontSize={"15px"} >{formik.errors.email}.</Text>}
                                 </Flex>
                             </Flex>
-                            <Flex flexDirection="column" mt="5px" w="100%">
-                                <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
-                                    Where do you want to go?
-                                </FormLabel>
-                                <Select name="destination" variant="outline" placeholder='Select Destination' value={formik.values?.destination.toString()} onBlur={formik.handleBlur} onChange={formik.handleChange} >
-                                    <option value="India" >India</option>
-                                    <option value="Africa" >Africa</option>
-                                    <option value="Europe" >Europe</option>
-                                </Select>
-                                {formik.touched.destination && formik.errors.destination && <Text color="red.400" fontSize={12} >{formik.errors.destination}.</Text>}
+                            <Flex flexDirection="row" mt="5px" w="100%" justifyContent={"space-between"}>
+                                <Flex flexDirection="column" w="48%">
+                                    <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
+                                        Where do you want to go?
+                                    </FormLabel>
+                                    <Select bg="#f0eedd" name="destination" variant="outline" placeholder='Select Destination' value={formik.values?.destination.toString()} onBlur={formik.handleBlur} onChange={formik.handleChange} >
+                                        <option value="India" >India</option>
+                                        <option value="Africa" >Africa</option>
+                                        <option value="Europe" >Europe</option>
+                                    </Select>
+                                    {formik.touched.destination && formik.errors.destination && <Text color="red.400" fontSize={"15px"} >{formik.errors.destination}.</Text>}
+                                </Flex>
+                                <Flex flexDirection="column" w="48%">
+                                    <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
+                                        Budget per Person
+                                    </FormLabel>
+                                    <InputGroup>
+                                        <InputLeftElement pointerEvents='none'>
+                                            <CgDollar color='gray.300' />
+                                        </InputLeftElement>
+                                        <Input
+                                            name='budgetOfPerson'
+                                            type='number'
+                                            onChange={formik.handleChange}
+                                            value={formik.values?.budgetOfPerson.toString()}
+                                            placeholder="Enter Your budget per Person "
+                                            variant="outline"
+                                            isInvalid={formik.touched.budgetOfPerson && Boolean(formik.errors.budgetOfPerson)}
+                                            onBlur={formik.handleBlur}
+                                            pl="30px"
+                                            bg="#f0eedd"
+                                        />
+                                    </InputGroup>
+                                    {formik.touched.budgetOfPerson && formik.errors.budgetOfPerson && <Text color="red.400" fontSize={"15px"} >{formik.errors.budgetOfPerson}.</Text>}
+                                </Flex>
                             </Flex>
                             <Flex flexDirection="column" mt="5px" w="100%">
                                 <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
@@ -135,46 +161,20 @@ const Form: FC = () => {
                                 </FormLabel>
                                 <input
                                     type='range'
+
                                     onChange={handletravellers}
                                     onMouseEnter={() => setTravellertouch(true)}
-                                    value={travellers} />
-                                {Travellertouch && travellers === 0 && <Text color="red.400" fontSize={12} >Atleast One Travellers is required.</Text>}
+                                    value={travellers.toString()} />
+                                {Travellertouch && travellers === 0 && <Text color="red.400" fontSize={"15px"} >Atleast One Travellers is required.</Text>}
                             </Flex>
-
-                            <Flex flexDirection="row" w="100%" mt="5px" justifyContent={"space-between"}>
-                                <Flex flexDirection="column" w="48%">
-                                    <FormLabel fontWeight="700" mb="1" mt="5" data-aos="flip-right" data-aos-delay="300">
-                                        Budget per Person
-                                    </FormLabel>
-                                    <Input
-                                        name='budgetOfPerson'
-                                        type='number'
-                                        onChange={formik.handleChange}
-                                        value={formik.values?.budgetOfPerson.toString()}
-                                        placeholder="Enter Your budget per Person "
-                                        variant="outline"
-                                        isInvalid={formik.touched.budgetOfPerson && Boolean(formik.errors.budgetOfPerson)}
-                                        onBlur={formik.handleBlur}
-                                        pl="3"
-
-                                    />
-                                    {formik.touched.budgetOfPerson && formik.errors.budgetOfPerson && <Text color="red.400" fontSize={12} >{formik.errors.budgetOfPerson}.</Text>}
+                            <Flex flexDir="row" justifyContent="space-between" mt="40px" mb="2" >
+                                <Flex bg="#a6a6a6" color="#000" border="1px solid #000" boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' borderRadius="10px" minW="25%" alignItems="center" justifyContent="center" >
+                                    <Text fontSize="20px" fontWeight="500" color="#000" >Net Budget : ${formik.values.budgetOfPerson !== "" ? Number(formik.values?.budgetOfPerson) * Number(travellers) : 0}</Text>
                                 </Flex>
-                                <Flex flexDirection="column" w="48%">
-                                    <FormLabel data-aos="flip-right" data-aos-delay="300" fontWeight="700" mb="1" mt="5">
-                                        Currency
-                                    </FormLabel>
-                                    <Select name="currency" variant="outline" placeholder='Select Currency' value={formik.values?.currency.toString()} onBlur={formik.handleBlur} onChange={formik.handleChange} >
-                                        <option value="USD" >$ USD</option>
-                                        <option value="EUR" >€ EUR</option>
-                                        <option value="IND" >₹ IND</option>
-                                    </Select>
-                                    {formik.touched.currency && formik.errors.currency && <Text color="red.400" fontSize={12} >{formik.errors.currency}.</Text>}
-                                </Flex>
+                                <Button bg="#ffe01b" color="#000" border="1px solid #000" borderRadius="99px" boxShadow={"transparent"} _hover={{ bg: "#e2e8f0", transform: "translateY(-10px)", boxShadow: "0px 8px 0px #000", }} w="25%" type="submit" isLoading={loading} loadingText="Submitting details" >
+                                    Submit
+                                </Button>
                             </Flex>
-                            <Button data-aos="flip-right" bg="#ffe01b" color="#000" border="1px solid #000" borderRadius="99px" boxShadow={"transparent"} _hover={{ bg: "#e2e8f0", transform: "translateY(-10px)", boxShadow: "0px 8px 0px #000", }} mt="40px" mb="2" w="25%" type="submit" isLoading={loading} loadingText="Submitting details" >
-                                Submit
-                            </Button>
 
                         </FormControl>
                     </Container>

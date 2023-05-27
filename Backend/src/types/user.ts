@@ -6,7 +6,6 @@ export type UserDocument = Document & {
   destination: string;
   travellers: number;
   budgetOfPerson: number;
-  currency: string;
 };
 
 export type UserInput = {
@@ -15,5 +14,4 @@ export type UserInput = {
   destination: UserDocument["destination"];
   travellers: UserDocument["travellers"];
   budgetOfPerson: UserDocument["budgetOfPerson"];
-  currency: UserDocument["currency"];
 };

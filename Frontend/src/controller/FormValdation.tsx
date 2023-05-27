@@ -5,7 +5,6 @@ const uservalidationSchema = object({
     email: string().email('Invalid email').required('Please Enter Email'),
     destination: string().required('Please Select Destination'),
     budgetOfPerson: string().required('Please Enter Budget Per Person '),
-    currency: string().required('Please Select Currency'),
 });
 
 export { uservalidationSchema }

@@ -12,7 +12,7 @@ const ShowAllUser: FC = () => {
     const [page, setPage] = useState<number>(1)
 
     useEffect(() => {
-        dispatch(getAllUserProfile(`https://graceful-wasp-slip.cyclic.app/user?page=${page}&limit=10`))
+        dispatch(getAllUserProfile(`http://localhost:8001/user?page=${page}&limit=10`))
     }, [page, dispatch])
 
     useEffect(() => {
@@ -40,19 +40,16 @@ const ShowAllUser: FC = () => {
                                 <Th borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>Destination</Th>
                                 <Th borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>Number Of Travellers</Th>
                                 <Th borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>Budget (Per Person)</Th>
-                                <Th borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>Currency</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
                             {data && data.length > 0 && data.map((el: UserState) => {
-                                return (<Tr bg="rgba(217, 216, 214, 0.05)" borderRadius={"5px"} _hover={{ bg: "#f2f0f0" }} >
+                                return (<Tr key={el._id} bg="rgba(217, 216, 214, 0.05)" borderRadius={"5px"} _hover={{ bg: "#f2f0f0" }} >
                                     <Td color="#111822" borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"} >{el.name}</Td>
                                     <Td color="#111822" borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"} >{el.email}</Td>
                                     <Td color="#111822" borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>{el.destination}</Td>
                                     <Td color="#111822" borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>{el.travellers}</Td>
-                                    <Td color="#111822" borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>{el.currency === "USD" ? "$" : el.currency === "EUR" ? "€" : "₹"} {el.budgetOfPerson}</Td>
-                                    <Td color="#111822" borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>{el.currency}</Td>
-
+                                    <Td color="#111822" borderBottom={" 1px solid rgba(0, 0, 0, 0.25)"}>$ {el.budgetOfPerson}</Td>
                                 </Tr>)
                             })}
 
