@@ -3,10 +3,10 @@ import { postUser, getAllUser } from "../controllers/userController";
 
 const app: IRouter = express.Router();
 
-// first endpoint will receive data from the front-end Travel Form
+// first endpoint will receive data from the front-end Travel Form 
 app.post("/", postUser);
 
-// The second endpoint will retrieve existing form submissions from the data base.
+// The second endpoint will retrieve All form submissions from the database.
 app.get("/", getAllUser);
 
 
